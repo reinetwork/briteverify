@@ -11,4 +11,15 @@ X-Ua-Compatible: IE=EmulateIE7
 transfer-encoding: chunked
 Connection: keep-alive
 
-{"address":"johndoe@briteverify.com","account":"johndoe","domain":"briteverify.com","status":"invalid","connected":null,"disposable":false,"role_address":false,"error_code":"email_account_invalid","error":"Email account invalid","duration":0.0000000000}
+{
+    "address": "johndoe@briteverify.com",
+    "account": "johndoe",
+    "domain": "briteverify.com",
+    "status": "valid",
+    "connected": null,
+    "disposable": true,
+    "role_address": false,
+    "error_code": "email_account_valid",
+    "error": "Email account valid",
+    "duration": 0.0000000000
+}

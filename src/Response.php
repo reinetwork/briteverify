@@ -1,7 +1,9 @@
 <?php
-
 namespace REINetwork\BriteVerify;
 
+/**
+ * A representation of the BriteVerify response for an email validation call.
+ */
 class Response
 {
     public $address;
@@ -20,6 +22,10 @@ class Response
         $this->parse($response);
     }
 
+    /**
+     * Maps the JSON response values into this class properties.
+     * @param  \GuzzleHttp\Message\Response  $response.
+     */
     protected function parse(\GuzzleHttp\Message\Response $response)
     {
         $json = $response->json();

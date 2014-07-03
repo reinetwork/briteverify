@@ -2,8 +2,9 @@
 
 namespace REINetwork\BriteVerify;
 
-use SebastianBergmann\Exporter\Exception;
-
+/**
+ * A client wrapper to call BriteVerify /emails API.
+ */
 class Client
 {
     protected $token = null;
@@ -18,6 +19,12 @@ class Client
         $this->client = $client ?: new \GuzzleHttp\Client();
     }
 
+    /**
+     * Creates the request GET object to call the API.
+     * @param  String $token   The API user token.
+     * @param  String $address The email to validate.
+     * @return GuzzleHttp\Message\Request
+     */
     public function getRequest($token, $address)
     {
         // configure the request object
@@ -35,6 +42,11 @@ class Client
         return $request;
     }
 
+    /**
+     * Maps the Guzzle's response into a Response object.
+     * @param  \GuzzleHttp\Message\Response $response The response object.
+     * @return Response
+     */
     public function getResponse(\GuzzleHttp\Message\Response $response)
     {
         if ($response->getStatusCode() !== '200') {
@@ -44,6 +56,11 @@ class Client
         return new Response($response);
     }
 
+    /**
+     * Calls the API to verify if a given email address is valid.
+     * @param  String $address The email to validate.
+     * @return Response
+     */
     public function verify($address)
     {
         $request = $this->getRequest($this->token, $address);
