@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Cache-Control: max-age=0, private, must-revalidate
+Content-Type: application/json; charset=utf-8
+Date: Thu, 03 Jul 2014 02:44:04 GMT
+Etag: "99d24216efeef86fe8f9db14080f2162"
+Status: 200 OK
+X-Frame-Options: DENY
+X-Request-Id: 9b354bc1-17d0-4c8f-a58e-27405e0ba224
+X-Runtime: 0.895706
+X-Ua-Compatible: IE=EmulateIE7
+transfer-encoding: chunked
+Connection: keep-alive
+
+{"address":"johndoe@briteverify.com","account":"johndoe","domain":"briteverify.com","status":"invalid","connected":null,"disposable":false,"role_address":false,"error_code":"email_account_invalid","error":"Email account invalid","duration":0.0000000000}
