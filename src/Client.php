@@ -7,12 +7,27 @@ namespace REINetwork\BriteVerify;
  */
 class Client
 {
-    protected $token = null;
+    /**
+     * @var string Api Token
+     */
+    protected $token;
 
-    protected $client = null;
+    /**
+     * @var \GuzzleHttp\Client Guzzle client
+     */
+    protected $client;
 
+    /**
+     * @var string BriteVerify API URL
+     */
     protected $endpoint = 'https://bpi.briteverify.com/emails.json';
 
+    /**
+     * Constructor -- handle dependency injection.
+     *
+     * @param $token
+     * @param \GuzzleHttp\Client $client
+     */
     public function __construct($token, \GuzzleHttp\Client $client = null)
     {
         $this->token = $token;
@@ -21,6 +36,7 @@ class Client
 
     /**
      * Creates the request GET object to call the API.
+     *
      * @param  String $token   The API user token.
      * @param  String $address The email to validate.
      * @return GuzzleHttp\Message\Request
@@ -30,8 +46,7 @@ class Client
         // configure the request object
         $options = [
             'exceptions' => false,
-            'verify' => false,
-
+            'verify' => false
         ];
 
         // create request object and set query string variables
@@ -44,7 +59,9 @@ class Client
 
     /**
      * Maps the Guzzle's response into a Response object.
+     *
      * @param  \GuzzleHttp\Message\Response $response The response object.
+     * @throws \Exception
      * @return Response
      */
     public function getResponse(\GuzzleHttp\Message\Response $response)
@@ -58,6 +75,7 @@ class Client
 
     /**
      * Calls the API to verify if a given email address is valid.
+     *
      * @param  String $address The email to validate.
      * @return Response
      */
