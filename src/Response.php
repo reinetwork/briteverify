@@ -38,8 +38,8 @@ class Response
         $this->connected = $json['connected'];
         $this->disposable = $json['disposable'];
         $this->roleAddress = $json['role_address'];
-        $this->errorCode = $json['error_code'];
-        $this->error = $json['error'];
+        $this->errorCode = isset($json['error_code']) ? $json['error_code'] : '';
+        $this->error = isset($json['error']) ? $json['error'] : '';
         $this->duration = $json['duration'];
     }
 
