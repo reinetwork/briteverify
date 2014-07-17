@@ -38,36 +38,69 @@ class Response
         $this->connected = $json['connected'];
         $this->disposable = $json['disposable'];
         $this->roleAddress = $json['role_address'];
-        $this->errorCode = $json['error_code'];
-        $this->error = $json['error'];
+        $this->errorCode = isset($json['error_code']) ? $json['error_code'] : '';
+        $this->error = isset($json['error']) ? $json['error'] : '';
         $this->duration = $json['duration'];
     }
 
+    /**
+     * Check to see if email passed validation
+     *
+     * @return bool
+     */
     public function isValid()
     {
         return ($this->status === 'valid');
     }
 
+    /**
+     * Check to see if email failed validation
+     *
+     * @return bool
+     */
     public function isInvalid()
     {
         return ($this->status === 'invalid');
     }
 
+    /**
+     * Check to see if domain accepts any address
+     *
+     * @return bool
+     */
     public function isAcceptAll()
     {
         return ($this->status === 'accept_all');
     }
 
+    /**
+     * Check to see if the request did not complete.
+     *
+     * @return bool
+     */
     public function isUnknown()
     {
         return ($this->status === 'unknown');
     }
 
+    /**
+     * Checks to see if the address is a "throw away."
+     * @example user@mailinator.com
+     *
+     * @return bool
+     */
     public function isDisposable()
     {
         return ($this->disposable === true);
     }
 
+    /**
+     * Checks to see if the address is a role address
+     * @example postmaster@domain.com
+     * @example abuse@domain.com
+     *
+     * @return bool
+     */
     public function isRoleAddress()
     {
         return ($this->roleAddress === true);
