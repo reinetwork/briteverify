@@ -43,14 +43,8 @@ class Client
      */
     public function getRequest($token, $address)
     {
-        // configure the request object
-        $options = [
-            'exceptions' => false,
-            'verify' => false
-        ];
-
         // create request object and set query string variables
-        $request = $this->client->createRequest('GET', $this->endpoint, $options);
+        $request = $this->client->createRequest('GET', $this->endpoint);
         $request->getQuery()->set('apikey', $token);
         $request->getQuery()->set('address', $address);
 
@@ -61,13 +55,13 @@ class Client
      * Maps the Guzzle's response into a Response object.
      *
      * @param  \GuzzleHttp\Message\Response $response The response object.
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\BadResponseException
      * @return Response
      */
     public function getResponse(\GuzzleHttp\Message\Response $response)
     {
         if ($response->getStatusCode() !== '200') {
-            throw new \Exception('request failed');
+            throw new \GuzzleHttp\Exception\BadResponseException('request failed');
         }
 
         return new Response($response);
