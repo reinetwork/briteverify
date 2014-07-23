@@ -56,7 +56,7 @@ class Client
      *
      * @param  \GuzzleHttp\Message\Response $response The response object.
      * @throws \GuzzleHttp\Exception\BadResponseException
-     * @return Response
+     * @return \REINetwork\BriteVerify\Response
      */
     public function getResponse(\GuzzleHttp\Message\Response $response)
     {
@@ -71,7 +71,7 @@ class Client
      * Calls the API to verify if a given email address is valid.
      *
      * @param  String $address The email to validate.
-     * @return Response
+     * @return \REINetwork\BriteVerify\Response
      */
     public function verify($address)
     {
