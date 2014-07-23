@@ -1,0 +1,25 @@
+HTTP/1.1 200 OK
+cache-control: max-age=0, private, must-revalidate
+content-type: application/json; charset=utf-8
+date: Wed, 23 Jul 2014 20:43:37 GMT
+etag: "c60ff51978ead918c3bd932ac3a3f195"
+server: nginx/1.4.7
+status: 200 OK
+x-frame-options: DENY
+x-request-id: c77dcf82-2d6e-4e59-af1f-cc36ce6a174c
+x-runtime: 0.032109
+x-ua-compatible: IE=EmulateIE7
+Content-Length: 190
+Connection: keep-alive
+
+{
+    "address":null,
+    "account":null,
+    "domain":null,
+    "status":"invalid",
+    "connected":null,
+    "disposable":false,
+    "role_address":false,
+    "error_code":"email_address_invalid",
+    "error":"Email address invalid"
+}

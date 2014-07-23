@@ -44,6 +44,15 @@ class ClientTest extends PHPUnit_Framework_TestCase
                     'isAcceptAll' => false,
                     'isUnknown' => false,
                 ]
+            ],
+            [
+            '/mock/http_response_null_email.txt',
+                [
+                    'isValid' => false,
+                    'isInvalid' => true,
+                    'isAcceptAll' => false,
+                    'isUnknown' => false,
+                ]
             ]
         ];
     }
