@@ -40,7 +40,7 @@ class Response
         $this->roleAddress = $json['role_address'];
         $this->errorCode = isset($json['error_code']) ? $json['error_code'] : '';
         $this->error = isset($json['error']) ? $json['error'] : '';
-        $this->duration = $json['duration'];
+        $this->duration = isset($json['duration']) ? $json['duration'] : null;
     }
 
     /**
