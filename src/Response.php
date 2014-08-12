@@ -1,5 +1,4 @@
 <?php
-
 namespace REINetwork\BriteVerify;
 
 /**
@@ -41,6 +40,11 @@ class Response
         $this->errorCode = isset($json['error_code']) ? $json['error_code'] : '';
         $this->error = isset($json['error']) ? $json['error'] : '';
         $this->duration = isset($json['duration']) ? $json['duration'] : null;
+    }
+
+    public function getError()
+    {
+        return $this->error;
     }
 
     /**
@@ -105,5 +109,4 @@ class Response
     {
         return ($this->roleAddress === true);
     }
-
 }

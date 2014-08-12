@@ -8,22 +8,23 @@ class ResponseTest extends PHPUnit_Framework_TestCase
      */
     public function testClass($json, $expects)
     {
-      $responseMock = $this->getMockBuilder('\GuzzleHttp\Message\Response')
-          ->disableOriginalConstructor()
-          ->setMethods(['json'])
-          ->getMock();
+        $responseMock = $this->getMockBuilder('\GuzzleHttp\Message\Response')
+            ->disableOriginalConstructor()
+            ->setMethods(['json'])
+            ->getMock();
 
-      $responseMock->expects($this->once())
-          ->method('json')
-          ->will($this->returnValue($json));
+        $responseMock->expects($this->once())
+            ->method('json')
+            ->will($this->returnValue($json));
 
-      $this->class = new \REINetwork\BriteVerify\Response($responseMock);
-      $this->assertSame($expects['isValid'], $this->class->isValid());
-      $this->assertSame($expects['isInvalid'], $this->class->isInvalid());
-      $this->assertSame($expects['isAcceptAll'], $this->class->isAcceptAll());
-      $this->assertSame($expects['isUnknown'], $this->class->isUnknown());
-      $this->assertSame($expects['isDisposable'], $this->class->isDisposable());
-      $this->assertSame($expects['isRoleAddress'], $this->class->isRoleAddress());
+        $this->class = new \REINetwork\BriteVerify\Response($responseMock);
+        $this->assertSame($expects['isValid'], $this->class->isValid());
+        $this->assertSame($expects['isInvalid'], $this->class->isInvalid());
+        $this->assertSame($expects['isAcceptAll'], $this->class->isAcceptAll());
+        $this->assertSame($expects['isUnknown'], $this->class->isUnknown());
+        $this->assertSame($expects['isDisposable'], $this->class->isDisposable());
+        $this->assertSame($expects['isRoleAddress'], $this->class->isRoleAddress());
+        $this->assertSame($expects['getError'], $this->class->getError());
     }
 
 
@@ -50,8 +51,10 @@ class ResponseTest extends PHPUnit_Framework_TestCase
      *
      * valid: The email represents a real account / inbox available at the given domain
      * invalid: Not a real email
-     * unknown: For some reason we cannot verify valid or invalid. Most of the time a domain did not respond quickly enough.
-     * accept_all: These are domains that respond to every verification request in the affirmative, and therefore cannot be fully verified.
+     * unknown: For some reason we cannot verify valid or invalid. Most of the time a domain did not respond
+     *          quickly enough.
+     * accept_all: These are domains that respond to every verification request in the affirmative,
+     *             and therefore cannot be fully verified.
      */
 
     public function dataProvider()
@@ -103,6 +106,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                     'isUnknown' => false,
                     'isDisposable' => false,
                     'isRoleAddress' => false,
+                    'getError' => '',
                 ]
             ],
             [
@@ -114,6 +118,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                     'isUnknown' => false,
                     'isDisposable' => false,
                     'isRoleAddress' => false,
+                    'getError' => 'Email account invalid',
                 ]
             ],
             [
@@ -125,6 +130,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                     'isUnknown' => false,
                     'isDisposable' => false,
                     'isRoleAddress' => false,
+                    'getError' => 'Email account invalid',
                 ]
             ],
             [
@@ -136,9 +142,9 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                     'isUnknown' => true,
                     'isDisposable' => false,
                     'isRoleAddress' => false,
+                    'getError' => 'Email account invalid',
                 ]
             ],
         ];
     }
-
 }
