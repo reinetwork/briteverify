@@ -18,10 +18,10 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->client = new \REINetwork\BriteVerify\Client('1111-2222-3333-4444', $this->guzzleClient);
         $response = $this->client->verify('johndoe@briteverify.com');
 
-       $this->assertSame($expects['isValid'], $response->isValid());
-       $this->assertSame($expects['isInvalid'], $response->isInvalid());
-       $this->assertSame($expects['isAcceptAll'], $response->isAcceptAll());
-       $this->assertSame($expects['isUnknown'], $response->isUnknown());
+        $this->assertSame($expects['isValid'], $response->isValid());
+        $this->assertSame($expects['isInvalid'], $response->isInvalid());
+        $this->assertSame($expects['isAcceptAll'], $response->isAcceptAll());
+        $this->assertSame($expects['isUnknown'], $response->isUnknown());
     }
 
     public function dataProvider()
