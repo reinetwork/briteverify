@@ -65,7 +65,7 @@ class Client
     public function getResponse(\GuzzleHttp\Message\Response $response)
     {
         if ($response->getStatusCode() !== '200') {
-            throw new \GuzzleHttp\Exception\BadResponseException('request failed', $this->request);
+            throw new \GuzzleHttp\Exception\BadResponseException('request failed', $this->request, $response);
         }
 
         return new Response($response);
