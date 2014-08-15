@@ -22,6 +22,11 @@ class Client
     protected $endpoint = 'https://bpi.briteverify.com/emails.json';
 
     /**
+     * @var \GuzzleHttp\Message\Request A Guzzle request
+     */
+    private $request;
+
+    /**
      * Constructor -- handle dependency injection.
      *
      * @param $token
@@ -60,7 +65,7 @@ class Client
     public function getResponse(\GuzzleHttp\Message\Response $response)
     {
         if ($response->getStatusCode() !== '200') {
-            throw new \GuzzleHttp\Exception\BadResponseException('request failed');
+            throw new \GuzzleHttp\Exception\BadResponseException('request failed', $this->request);
         }
 
         return new Response($response);
@@ -74,9 +79,9 @@ class Client
      */
     public function verify($address)
     {
-        $request = $this->getRequest($this->token, $address);
+        $this->request = $this->getRequest($this->token, $address);
 
-        $response = $this->client->send($request);
+        $response = $this->client->send($this->request);
 
         return $this->getResponse($response);
     }
