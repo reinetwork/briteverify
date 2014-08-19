@@ -1,10 +1,10 @@
 <?php
 
-namespace REINetwork\BriteVerify\ServiceProvider;
+namespace REINetwork\BriteVerify;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelServiceProvider extends ServiceProvider
+class BriteVerifyServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
