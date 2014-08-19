@@ -27,6 +27,6 @@
         "squizlabs/php_codesniffer": "*"
     },
     "autoload": {
-        "psr-4": { "REINetwork\\BriteVerify\\" : "src/" }
+        "psr-4": { "REINetwork\\BriteVerify\\" : "src/REINetwork/BriteVerify" }
     }
 }
