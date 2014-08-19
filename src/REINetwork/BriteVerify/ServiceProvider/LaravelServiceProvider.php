@@ -20,7 +20,7 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('REINetwork\BriteVerify');
+        $this->package('reinetwork/briteverify');
     }
 
     /**
