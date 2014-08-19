@@ -30,15 +30,15 @@ class Client
     public function __construct($token, \GuzzleHttp\Client $client = null)
     {
         $this->token = $token;
-        $this->client = $client ?: new \GuzzleHttp\Client();
+        $this->client = $client ? : new \GuzzleHttp\Client();
     }
 
     /**
      * Creates the request GET object to call the API.
      *
-     * @param  String $token   The API user token.
+     * @param  String $token The API user token.
      * @param  String $address The email to validate.
-     * @return GuzzleHttp\Message\Request
+     * @return \GuzzleHttp\Message\Request
      */
     public function getRequest($token, $address)
     {
@@ -53,14 +53,17 @@ class Client
     /**
      * Maps the Guzzle's response into a Response object.
      *
+     * @param  \GuzzleHttp\Message\Request $request The request object.
      * @param  \GuzzleHttp\Message\Response $response The response object.
      * @throws \GuzzleHttp\Exception\BadResponseException
      * @return \REINetwork\BriteVerify\Response
      */
-    public function getResponse(\GuzzleHttp\Message\Response $response)
-    {
+    public function getResponse(
+        \GuzzleHttp\Message\Request $request,
+        \GuzzleHttp\Message\Response $response
+    ) {
         if ($response->getStatusCode() !== '200') {
-            throw new \GuzzleHttp\Exception\BadResponseException('request failed');
+            throw new \GuzzleHttp\Exception\BadResponseException('request failed', $request, $response);
         }
 
         return new Response($response);
@@ -78,6 +81,6 @@ class Client
 
         $response = $this->client->send($request);
 
-        return $this->getResponse($response);
+        return $this->getResponse($request, $response);
     }
 }
