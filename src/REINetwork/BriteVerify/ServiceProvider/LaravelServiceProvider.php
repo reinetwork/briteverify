@@ -52,7 +52,7 @@ class LaravelServiceProvider extends ServiceProvider
         $this->app->bind(
             'briteverify',
             function ($app) {
-                $token = $app['config']->get('briteverify.token');
+                $token = $app['config']->get('briteverify::token');
                 return new \REINetwork\BriteVerify\Client($token);
             }
         );
