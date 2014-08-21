@@ -6,6 +6,8 @@ namespace REINetwork\BriteVerify;
  */
 class Response
 {
+    protected $response;
+
     public $address;
     public $account;
     public $domain;
@@ -19,6 +21,8 @@ class Response
 
     public function __construct(\GuzzleHttp\Message\Response $response)
     {
+        $this->response = $response;
+
         $this->parse($response);
     }
 
@@ -108,5 +112,15 @@ class Response
     public function isRoleAddress()
     {
         return ($this->roleAddress === true);
+    }
+
+    /**
+     * Return the raw HTTP request.
+     *
+     * @return \GuzzleHttp\Message\Response
+     */
+    public function getHttpResponse()
+    {
+        return (string) $this->response;
     }
 }
