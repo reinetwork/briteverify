@@ -22,7 +22,7 @@ class ClientTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expects['isInvalid'], $response->isInvalid());
         $this->assertSame($expects['isAcceptAll'], $response->isAcceptAll());
         $this->assertSame($expects['isUnknown'], $response->isUnknown());
-        $this->assertSame(file_get_contents(__DIR__. $mockResponseFile), $response->getHttpResponse());
+        $this->assertEquals(file_get_contents(__DIR__. $mockResponseFile), $response->getHttpResponse());
     }
 
     public function dataProvider()
