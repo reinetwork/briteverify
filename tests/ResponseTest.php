@@ -1,23 +1,21 @@
 <?php
 
+use REINetwork\BriteVerify\Response;
+
 class ResponseTest extends PHPUnit_Framework_TestCase
 {
+    protected $class;
 
     /**
+     * @param $response
+     * @param $expects
+     *
      * @dataProvider dataProvider
      */
-    public function testClass($json, $expects)
+    public function testClass($response, $expects)
     {
-        $responseMock = $this->getMockBuilder('\GuzzleHttp\Message\Response')
-            ->disableOriginalConstructor()
-            ->setMethods(['json'])
-            ->getMock();
+        $this->class = new Response($response);
 
-        $responseMock->expects($this->once())
-            ->method('json')
-            ->will($this->returnValue($json));
-
-        $this->class = new \REINetwork\BriteVerify\Response($responseMock);
         $this->assertSame($expects['isValid'], $this->class->isValid());
         $this->assertSame($expects['isInvalid'], $this->class->isInvalid());
         $this->assertSame($expects['isAcceptAll'], $this->class->isAcceptAll());
@@ -72,6 +70,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
             'duration' => 0.0000000000,
         ];
 
+
         // If I pass an invalid email I will get not only a status of "invalid",
         // I will also get an error and and error code explaining why the email is invalid.
         $jsonInvalidEmail = [
@@ -96,9 +95,14 @@ class ResponseTest extends PHPUnit_Framework_TestCase
         $jsonInvalidEmailStatusUnknown = $jsonInvalidEmail;
         $jsonInvalidEmailStatusUnknown['status'] = 'unknown';
 
+        $validEmailResponse = $this->getGuzzleHttpResponse(200, [], $jsonValidEmail);
+        $invalidEmailResponse = $this->getGuzzleHttpResponse(200, [], $jsonInvalidEmail);
+        $invalidEmailStatusAcceptAllResponse = $this->getGuzzleHttpResponse(200, [], $jsonInvalidEmailStatusAcceptAll);
+        $invalidEmailStatusUnknownResponse = $this->getGuzzleHttpResponse(200, [], $jsonInvalidEmailStatusUnknown);
+
         return [
             [
-                $jsonValidEmail,
+                $validEmailResponse,
                 [
                     'isValid' => true,
                     'isInvalid' => false,
@@ -110,7 +114,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 ]
             ],
             [
-                $jsonInvalidEmail,
+                $invalidEmailResponse,
                 [
                     'isValid' => false,
                     'isInvalid' => true,
@@ -122,7 +126,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 ]
             ],
             [
-                $jsonInvalidEmailStatusAcceptAll,
+                $invalidEmailStatusAcceptAllResponse,
                 [
                     'isValid' => false,
                     'isInvalid' => false,
@@ -134,7 +138,7 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 ]
             ],
             [
-                $jsonInvalidEmailStatusUnknown,
+                $invalidEmailStatusUnknownResponse,
                 [
                     'isValid' => false,
                     'isInvalid' => false,
@@ -146,5 +150,23 @@ class ResponseTest extends PHPUnit_Framework_TestCase
                 ]
             ],
         ];
+    }
+
+    /**
+     * Creates a new response object based on the parameters
+     *
+     * @param $statusCode
+     * @param $header
+     * @param $jsonValidEmail
+     * @return \GuzzleHttp\Psr7\Response
+     */
+    private function getGuzzleHttpResponse($statusCode, $header, $jsonValidEmail)
+    {
+        $response = new \GuzzleHttp\Psr7\Response(
+            $statusCode,
+            $header,
+            \GuzzleHttp\Psr7\stream_for(json_encode($jsonValidEmail))
+        );
+        return $response;
     }
 }

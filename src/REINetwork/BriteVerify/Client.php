@@ -1,6 +1,11 @@
 <?php
 namespace REINetwork\BriteVerify;
 
+use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
+
 /**
  * A client wrapper to call BriteVerify /emails API.
  */
@@ -12,7 +17,7 @@ class Client
     protected $token;
 
     /**
-     * @var \GuzzleHttp\Client Guzzle client
+     * @var GuzzleClient Guzzle client
      */
     protected $client;
 
@@ -25,48 +30,31 @@ class Client
      * Constructor -- handle dependency injection.
      *
      * @param $token
-     * @param \GuzzleHttp\Client $client
+     * @param GuzzleClient $client
      */
-    public function __construct($token, \GuzzleHttp\Client $client = null)
+    public function __construct($token, GuzzleClient $client = null)
     {
         $this->token = $token;
-        $this->client = $client ? : new \GuzzleHttp\Client();
-    }
-
-    /**
-     * Creates the request GET object to call the API.
-     *
-     * @param  String $token The API user token.
-     * @param  String $address The email to validate.
-     * @return \GuzzleHttp\Message\Request
-     */
-    public function getRequest($token, $address)
-    {
-        // create request object and set query string variables
-        $request = $this->client->createRequest('GET', $this->endpoint);
-        $request->getQuery()->set('apikey', $token);
-        $request->getQuery()->set('address', $address);
-
-        return $request;
+        $this->client = $client ? : new GuzzleClient();
     }
 
     /**
      * Maps the Guzzle's response into a Response object.
      *
-     * @param  \GuzzleHttp\Message\Request $request The request object.
-     * @param  \GuzzleHttp\Message\Response $response The response object.
-     * @throws \GuzzleHttp\Exception\BadResponseException
+     * @param  Request $request The request object.
+     * @param  Response $response The response object.
+     *
+     * @throws BadResponseException
+     *
      * @return \REINetwork\BriteVerify\Response
      */
-    public function getResponse(
-        \GuzzleHttp\Message\Request $request,
-        \GuzzleHttp\Message\Response $response
-    ) {
-        if ($response->getStatusCode() !== '200') {
-            throw new \GuzzleHttp\Exception\BadResponseException('request failed', $request, $response);
+    public function getResponse(Request $request, Response $response)
+    {
+        if ($response->getStatusCode() !== 200) {
+            throw new BadResponseException('request failed', $request, $response);
         }
 
-        return new Response($response);
+        return new \REINetwork\BriteVerify\Response($response);
     }
 
     /**
@@ -77,7 +65,14 @@ class Client
      */
     public function verify($address)
     {
-        $request = $this->getRequest($this->token, $address);
+        $request = new Request(
+            'GET',
+            $this->endpoint,
+            [
+                'apikey' => $this->token,
+                'address' => $address,
+            ]
+        );
 
         $response = $this->client->send($request);
 
