@@ -1,6 +1,8 @@
 <?php
 namespace REINetwork\BriteVerify;
 
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
+
 /**
  * A representation of the BriteVerify response for an email validation call.
  */
@@ -19,7 +21,12 @@ class Response
     public $error;
     public $duration;
 
-    public function __construct(\GuzzleHttp\Message\Response $response)
+    /**
+     * Response constructor.
+     *
+     * @param GuzzleResponse $response
+     */
+    public function __construct(GuzzleResponse $response)
     {
         $this->response = $response;
 
@@ -28,11 +35,11 @@ class Response
 
     /**
      * Maps the JSON response values into this class properties.
-     * @param  \GuzzleHttp\Message\Response  $response.
+     * @param  GuzzleResponse $response.
      */
-    protected function parse(\GuzzleHttp\Message\Response $response)
+    protected function parse(GuzzleResponse $response)
     {
-        $json = $response->json();
+        $json = json_decode($response->getBody(), true);
 
         $this->address = $json['address'];
         $this->account = $json['account'];
@@ -117,7 +124,7 @@ class Response
     /**
      * Return the raw HTTP request.
      *
-     * @return \GuzzleHttp\Message\Response
+     * @return string
      */
     public function getHttpResponse()
     {
