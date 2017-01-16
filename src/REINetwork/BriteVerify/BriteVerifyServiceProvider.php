@@ -20,7 +20,8 @@ class BriteVerifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('reinetwork/briteverify');
+        // Removing this line for now. Until we can verify we still need it.
+//        $this->package('reinetwork/briteverify');
     }
 
     /**
