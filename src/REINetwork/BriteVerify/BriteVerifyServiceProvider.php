@@ -20,8 +20,13 @@ class BriteVerifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Removing this line for now. Until we can verify we still need it.
-//        $this->package('reinetwork/briteverify');
+        $configPath = __DIR__ . '/../../config/briteverify.php';
+        if (function_exists('config_path')) {
+            $publishPath = config_path('briteverify.php');
+        } else {
+            $publishPath = base_path('config/briteverify.php');
+        }
+        $this->publishes([$configPath => $publishPath], 'config');
     }
 
     /**
