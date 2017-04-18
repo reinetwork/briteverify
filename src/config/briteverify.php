@@ -24,6 +24,6 @@ return [
     |
     */
 
-    'pretend' => env('APP_ENV') == 'local' || env('APP_ENV') == 'testing' ? true : false,
+    'pretend' => env('BRITEVERIFY_PRETEND', false),
 
 ];
