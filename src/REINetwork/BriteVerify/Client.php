@@ -65,13 +65,19 @@ class Client
      */
     public function verify($address)
     {
+        $headers = [
+            'apikey' => $this->token,
+            'address' => $address,
+        ];
+
+        $queryString = http_build_query($headers);
+
+        $endPoint = $this->endpoint . "?$queryString";
+
         $request = new Request(
             'GET',
-            $this->endpoint,
-            [
-                'apikey' => $this->token,
-                'address' => $address,
-            ]
+            $endPoint,
+            $headers
         );
 
         $response = $this->client->send($request);
