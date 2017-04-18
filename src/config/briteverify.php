@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'token' => null,
+    'token' => env('BRITEVERIFY_API_TOKEN', null),
 
 
     /*
